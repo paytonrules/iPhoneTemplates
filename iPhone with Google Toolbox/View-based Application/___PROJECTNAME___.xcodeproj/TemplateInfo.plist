@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses a single view. It provides a view controller to manage the view, and a nib file that contains the view.</string>
+	<string>This template provides a starting point for an application that uses a single view. It provides a view controller to manage the view, and a nib file that contains the view.  It also contains the Google Toolbox for Mac for Unit Testing, and a UnitTests target.</string>
 </dict>
 </plist>
