@@ -70,6 +70,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0724D86A104965F200A9215C /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
 		0777BF0910486A2200D93E1A /* Google Toolbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,6 +113,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				0724D86A104965F200A9215C /* Tests */,
 				0777BF0910486A2200D93E1A /* Google Toolbox */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,

@@ -1,0 +1,5 @@
+{
+	MainTemplateFile = "class.m";
+	"CounterpartTemplateFile" = "class.h";
+	Description = "An Objective-C class for using the Google Toolbox for Mac for iPhone tests.";
+}
