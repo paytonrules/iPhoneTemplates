@@ -35,7 +35,7 @@
 
 /* Begin PBXFileReference section */
 		0724D87F1049674D00A9215C /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Frameworks/OCMock.framework; sourceTree = "<group>"; };
-		0724D8AA1049692B00A9215C /* UnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0724D8AA1049692B00A9215C /* UnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = UnitTests.app; path = "/Users/eric/Projects-not-8thlight/Cocoa/iPhone/iPhoneTemplates/Project Templates/iPhone with Google Toolbox/View-based Application/build/Debug-iphonesimulator/UnitTests.app"; sourceTree = "<absolute>"; };
 		0777BF0C10486AAA00D93E1A /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = "Google Toolbox/GTMDefines.h"; sourceTree = "<group>"; };
 		0777BF0D10486AAA00D93E1A /* GTMIPhoneUnitTestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMIPhoneUnitTestDelegate.h; path = "Google Toolbox/GTMIPhoneUnitTestDelegate.h"; sourceTree = "<group>"; };
 		0777BF0E10486AAA00D93E1A /* GTMIPhoneUnitTestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTMIPhoneUnitTestDelegate.m; path = "Google Toolbox/GTMIPhoneUnitTestDelegate.m"; sourceTree = "<group>"; };
@@ -114,7 +114,6 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0724D8AA1049692B00A9215C /* UnitTests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
