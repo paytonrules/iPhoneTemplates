@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0724D8801049674D00A9215C /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0724D87F1049674D00A9215C /* OCMock.framework */; };
-		0777BF1510486AAA00D93E1A /* GTMIPhoneUnitTestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777BF0E10486AAA00D93E1A /* GTMIPhoneUnitTestDelegate.m */; };
-		0777BF1610486AAA00D93E1A /* GTMIPhoneUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777BF0F10486AAA00D93E1A /* GTMIPhoneUnitTestMain.m */; };
-		0777BF1710486AAA00D93E1A /* GTMSenTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0777BF1110486AAA00D93E1A /* GTMSenTestCase.m */; };
+		07010EAE1050520B004D288F /* GTMIPhoneUnitTestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07010EAA1050520B004D288F /* GTMIPhoneUnitTestDelegate.m */; };
+		07010EAF1050520B004D288F /* GTMIPhoneUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 07010EAB1050520B004D288F /* GTMIPhoneUnitTestMain.m */; };
+		07010EB01050520B004D288F /* GTMSenTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 07010EAD1050520B004D288F /* GTMSenTestCase.m */; };
+		07010EC11050521D004D288F /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07010EC01050521D004D288F /* OCMock.framework */; };
 		0777BF1810486AC400D93E1A /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */; };
 		0777BF1910486AC400D93E1A /* ___PROJECTNAMEASIDENTIFIER___ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* ___PROJECTNAMEASIDENTIFIER___ViewController.m */; };
 		1D3623260D0F684500981E51 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */; };
@@ -28,25 +28,25 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 07DAA4CB1048188B00E97CF5 /* UnitTests */;
+			remoteGlobalIDString = 07DAA4CB1048188B00E97CF5;
 			remoteInfo = UnitTests;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0724D87F1049674D00A9215C /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Frameworks/OCMock.framework; sourceTree = "<group>"; };
-		0724D8AA1049692B00A9215C /* UnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = UnitTests.app; path = "/Users/eric/Projects-not-8thlight/Cocoa/iPhone/iPhoneTemplates/Project Templates/iPhone with Google Toolbox/View-based Application/build/Debug-iphonesimulator/UnitTests.app"; sourceTree = "<absolute>"; };
-		0777BF0C10486AAA00D93E1A /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = "Google Toolbox/GTMDefines.h"; sourceTree = "<group>"; };
-		0777BF0D10486AAA00D93E1A /* GTMIPhoneUnitTestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMIPhoneUnitTestDelegate.h; path = "Google Toolbox/GTMIPhoneUnitTestDelegate.h"; sourceTree = "<group>"; };
-		0777BF0E10486AAA00D93E1A /* GTMIPhoneUnitTestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTMIPhoneUnitTestDelegate.m; path = "Google Toolbox/GTMIPhoneUnitTestDelegate.m"; sourceTree = "<group>"; };
-		0777BF0F10486AAA00D93E1A /* GTMIPhoneUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTMIPhoneUnitTestMain.m; path = "Google Toolbox/GTMIPhoneUnitTestMain.m"; sourceTree = "<group>"; };
-		0777BF1010486AAA00D93E1A /* GTMSenTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMSenTestCase.h; path = "Google Toolbox/GTMSenTestCase.h"; sourceTree = "<group>"; };
-		0777BF1110486AAA00D93E1A /* GTMSenTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTMSenTestCase.m; path = "Google Toolbox/GTMSenTestCase.m"; sourceTree = "<group>"; };
+		07010EA81050520B004D288F /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMDefines.h; path = "Google Toolbox/GTMDefines.h"; sourceTree = "<group>"; };
+		07010EA91050520B004D288F /* GTMIPhoneUnitTestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMIPhoneUnitTestDelegate.h; path = "Google Toolbox/GTMIPhoneUnitTestDelegate.h"; sourceTree = "<group>"; };
+		07010EAA1050520B004D288F /* GTMIPhoneUnitTestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTMIPhoneUnitTestDelegate.m; path = "Google Toolbox/GTMIPhoneUnitTestDelegate.m"; sourceTree = "<group>"; };
+		07010EAB1050520B004D288F /* GTMIPhoneUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTMIPhoneUnitTestMain.m; path = "Google Toolbox/GTMIPhoneUnitTestMain.m"; sourceTree = "<group>"; };
+		07010EAC1050520B004D288F /* GTMSenTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GTMSenTestCase.h; path = "Google Toolbox/GTMSenTestCase.h"; sourceTree = "<group>"; };
+		07010EAD1050520B004D288F /* GTMSenTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GTMSenTestCase.m; path = "Google Toolbox/GTMSenTestCase.m"; sourceTree = "<group>"; };
+		07010EC01050521D004D288F /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Frameworks/OCMock.framework; sourceTree = "<group>"; };
+		079FD52610504F2E0079DFFA /* ___PROJECTNAME___.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "___PROJECTNAME___.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		079FD52810504F2E0079DFFA /* UnitTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07DAA4CE1048188B00E97CF5 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.h"; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "___PROJECTNAMEASIDENTIFIER___AppDelegate.m"; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* ___PROJECTNAME___.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "___PROJECTNAME___.app"; path = "/Users/eric/Projects-not-8thlight/Cocoa/iPhone/iPhoneTemplates/Project Templates/iPhone with Google Toolbox/View-based Application/build/Debug-iphonesimulator/___PROJECTNAME___.app"; sourceTree = "<absolute>"; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2899E5210DE3E06400AC0155 /* ___PROJECTNAMEASIDENTIFIER___ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "___PROJECTNAMEASIDENTIFIER___ViewController.xib"; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0724D8801049674D00A9215C /* OCMock.framework in Frameworks */,
+				07010EC11050521D004D288F /* OCMock.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,12 +90,12 @@
 		0777BF0910486A2200D93E1A /* Google Toolbox */ = {
 			isa = PBXGroup;
 			children = (
-				0777BF0C10486AAA00D93E1A /* GTMDefines.h */,
-				0777BF0D10486AAA00D93E1A /* GTMIPhoneUnitTestDelegate.h */,
-				0777BF0E10486AAA00D93E1A /* GTMIPhoneUnitTestDelegate.m */,
-				0777BF0F10486AAA00D93E1A /* GTMIPhoneUnitTestMain.m */,
-				0777BF1010486AAA00D93E1A /* GTMSenTestCase.h */,
-				0777BF1110486AAA00D93E1A /* GTMSenTestCase.m */,
+				07010EA81050520B004D288F /* GTMDefines.h */,
+				07010EA91050520B004D288F /* GTMIPhoneUnitTestDelegate.h */,
+				07010EAA1050520B004D288F /* GTMIPhoneUnitTestDelegate.m */,
+				07010EAB1050520B004D288F /* GTMIPhoneUnitTestMain.m */,
+				07010EAC1050520B004D288F /* GTMSenTestCase.h */,
+				07010EAD1050520B004D288F /* GTMSenTestCase.m */,
 			);
 			name = "Google Toolbox";
 			sourceTree = "<group>";
@@ -114,6 +114,8 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				079FD52610504F2E0079DFFA /* ___PROJECTNAME___.app */,
+				079FD52810504F2E0079DFFA /* UnitTests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -155,7 +157,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0724D87F1049674D00A9215C /* OCMock.framework */,
+				07010EC01050521D004D288F /* OCMock.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -181,7 +183,7 @@
 			);
 			name = UnitTests;
 			productName = UnitTests;
-			productReference = 0724D8AA1049692B00A9215C /* UnitTests.app */;
+			productReference = 079FD52810504F2E0079DFFA /* UnitTests.app */;
 			productType = "com.apple.product-type.application";
 		};
 		1D6058900D05DD3D006BFB54 /* ___PROJECTNAME___ */ = {
@@ -199,7 +201,7 @@
 			);
 			name = "___PROJECTNAME___";
 			productName = "___PROJECTNAME___";
-			productReference = 1D6058910D05DD3D006BFB54 /* ___PROJECTNAME___.app */;
+			productReference = 079FD52610504F2E0079DFFA /* ___PROJECTNAME___.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -262,9 +264,9 @@
 			files = (
 				0777BF1810486AC400D93E1A /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */,
 				0777BF1910486AC400D93E1A /* ___PROJECTNAMEASIDENTIFIER___ViewController.m in Sources */,
-				0777BF1510486AAA00D93E1A /* GTMIPhoneUnitTestDelegate.m in Sources */,
-				0777BF1610486AAA00D93E1A /* GTMIPhoneUnitTestMain.m in Sources */,
-				0777BF1710486AAA00D93E1A /* GTMSenTestCase.m in Sources */,
+				07010EAE1050520B004D288F /* GTMIPhoneUnitTestDelegate.m in Sources */,
+				07010EAF1050520B004D288F /* GTMIPhoneUnitTestMain.m in Sources */,
+				07010EB01050520B004D288F /* GTMSenTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
