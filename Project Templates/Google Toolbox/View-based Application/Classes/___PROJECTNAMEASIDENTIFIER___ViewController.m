@@ -1,16 +1,6 @@
-//
-//  ___PROJECTNAMEASIDENTIFIER___ViewController.m
-//  ___PROJECTNAME___
-//
-//  Created by ___FULLUSERNAME___ on ___DATE___.
-//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
-//
-
 #import "___PROJECTNAMEASIDENTIFIER___ViewController.h"
 
 @implementation ___PROJECTNAMEASIDENTIFIER___ViewController
-
-
 
 /*
 // The designated initializer. Override to perform setup that is required before the view is loaded.
@@ -39,27 +29,30 @@
 
 /*
 // Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation 
+{
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 */
 
-- (void)didReceiveMemoryWarning {
+-(void) didReceiveMemoryWarning 
+{
 	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
+	[super didReceiveMemoryWarning];
 	
 	// Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
+- (void)viewDidUnload 
+{
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
 }
 
-
-- (void)dealloc {
-    [super dealloc];
+- (void)dealloc 
+{
+	[super dealloc];
 }
 
 @end
