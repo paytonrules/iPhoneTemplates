@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 require 'fileutils'
 
-PROJECT_DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/Google Toolbox/'
-FILE_DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/File Templates/Google Toolbox/'
+PROJECT_DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/Project Templates/'
+FILE_DST_DIR='/Developer/Platforms/iPhoneOS.platform/Developer/Library/Xcode/File Templates/'
 
 puts 'Google Toolbox for Mac Template Installer'
 
