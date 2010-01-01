@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07C5AECC10EE73E700EB99BA /* RunIPhoneUnitTest.sh in Resources */ = {isa = PBXBuildFile; fileRef = 07C5AEC810EE73E700EB99BA /* RunIPhoneUnitTest.sh */; };
+		07C5AF8B10EE9D0E00EB99BA /* GTMIPhoneUnitTestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C5AEC410EE73E700EB99BA /* GTMIPhoneUnitTestDelegate.m */; };
+		07C5AF8C10EE9D0E00EB99BA /* GTMIPhoneUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C5AEC510EE73E700EB99BA /* GTMIPhoneUnitTestMain.m */; };
+		07C5AF8D10EE9D0E00EB99BA /* GTMSenTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C5AEC710EE73E700EB99BA /* GTMSenTestCase.m */; };
 		1D3623260D0F684500981E51 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -250,7 +252,6 @@
 				2514C27B10084DCA00A42282 /* Shader.fsh in Resources */,
 				2514C27C10084DCA00A42282 /* Shader.vsh in Resources */,
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				07C5AECC10EE73E700EB99BA /* RunIPhoneUnitTest.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +278,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07C5AF8B10EE9D0E00EB99BA /* GTMIPhoneUnitTestDelegate.m in Sources */,
+				07C5AF8C10EE9D0E00EB99BA /* GTMIPhoneUnitTestMain.m in Sources */,
+				07C5AF8D10EE9D0E00EB99BA /* GTMSenTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
