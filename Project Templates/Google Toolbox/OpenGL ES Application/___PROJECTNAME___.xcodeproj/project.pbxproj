@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		07C5AEC910EE73E700EB99BA /* GTMIPhoneUnitTestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C5AEC410EE73E700EB99BA /* GTMIPhoneUnitTestDelegate.m */; };
-		07C5AECA10EE73E700EB99BA /* GTMIPhoneUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C5AEC510EE73E700EB99BA /* GTMIPhoneUnitTestMain.m */; };
-		07C5AECB10EE73E700EB99BA /* GTMSenTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 07C5AEC710EE73E700EB99BA /* GTMSenTestCase.m */; };
 		07C5AECC10EE73E700EB99BA /* RunIPhoneUnitTest.sh in Resources */ = {isa = PBXBuildFile; fileRef = 07C5AEC810EE73E700EB99BA /* RunIPhoneUnitTest.sh */; };
 		1D3623260D0F684500981E51 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* ___PROJECTNAMEASIDENTIFIER___AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -24,6 +21,16 @@
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		07C5AF1010EE995200EB99BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 07C5AED010EE73F600EB99BA /* UnitTests */;
+			remoteInfo = UnitTests;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		07C5AEC210EE73E700EB99BA /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
@@ -203,6 +210,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				07C5AF1110EE995200EB99BA /* PBXTargetDependency */,
 			);
 			name = "___PROJECTNAME___";
 			productName = "___PROJECTNAME___";
@@ -281,13 +289,18 @@
 				28FD14FE0DC6FC130079059D /* EAGLView.m in Sources */,
 				2514C27210084DB100A42282 /* ES1Renderer.m in Sources */,
 				2514C27310084DB100A42282 /* ES2Renderer.m in Sources */,
-				07C5AEC910EE73E700EB99BA /* GTMIPhoneUnitTestDelegate.m in Sources */,
-				07C5AECA10EE73E700EB99BA /* GTMIPhoneUnitTestMain.m in Sources */,
-				07C5AECB10EE73E700EB99BA /* GTMSenTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		07C5AF1110EE995200EB99BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 07C5AED010EE73F600EB99BA /* UnitTests */;
+			targetProxy = 07C5AF1010EE995200EB99BA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		07C5AED410EE73F600EB99BA /* Debug */ = {
