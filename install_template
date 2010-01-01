@@ -9,7 +9,7 @@ echo "...copying project templates"
 cp -Rf 'Project Templates/Google Toolbox' "$PROJECT_DST_DIR"
 
 echo "...creating destination directory for file templates: " "$FILE_DST_DIR"
-mkdir -p "FILE_DST_DIR"
+mkdir -p "$FILE_DST_DIR"
 
 echo "...copying unit test file template"
 cp -Rf 'File Templates/Google Toolbox' "$FILE_DST_DIR"
