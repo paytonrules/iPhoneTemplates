@@ -9,10 +9,10 @@ puts 'Google Toolbox for Mac Template Installer'
 puts "...creating destination directory for projects: #{PROJECT_DST_DIR}"
 FileUtils.mkdir_p(PROJECT_DST_DIR)
 puts "...copying project templates"
-FileUtils.cp_r('Project Templates/Google Toolbox/', PROJECT_DST_DIR)
+system("/bin/cp -Rf 'Project Templates/Google Toolbox' '#{PROJECT_DST_DIR}'")
 
 puts "...creating destination directory for file templates: #{FILE_DST_DIR}"
 FileUtils.mkdir_p(FILE_DST_DIR)
 puts "...copying unit test file template"
-FileUtils.cp_r 'File Templates/Google Toolbox/', FILE_DST_DIR
+system("/bin/cp -Rf 'File Templates/Google Toolbox' '#{FILE_DST_DIR}'")
 puts "done!"
