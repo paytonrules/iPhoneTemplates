@@ -18,6 +18,8 @@
 
 #import "GTMSenTestCase.h"
 #import <unistd.h>
+#import "GTMObjC2Runtime.h"
+#import "GTMUnitTestDevLog.h"
 
 #if !GTM_IPHONE_SDK
 #import "GTMGarbageCollection.h"
@@ -213,6 +215,22 @@ NSString *const SenTestLineNumberKey = @"SenTestLineNumberKey";
 @end
 
 @implementation SenTestCase
++ (id)testCaseWithInvocation:(NSInvocation *)anInvocation {
+  return [[[[self class] alloc] initWithInvocation:anInvocation] autorelease];
+}
+
+- (id)initWithInvocation:(NSInvocation *)anInvocation {
+  if ((self = [super init])) {
+    invocation_ = [anInvocation retain];
+  }
+  return self;
+}
+
+- (void)dealloc {
+  [invocation_ release];
+  [super dealloc];
+}
+
 - (void)failWithException:(NSException*)exception {
   [exception raise];
 }
@@ -220,15 +238,22 @@ NSString *const SenTestLineNumberKey = @"SenTestLineNumberKey";
 - (void)setUp {
 }
 
-- (void)performTest:(SEL)sel {
-  currentSelector_ = sel;
+- (void)performTest {
   @try {
     [self invokeTest];
   } @catch (NSException *exception) {
     [[self class] printException:exception
-                    fromTestName:NSStringFromSelector(sel)];
+                    fromTestName:NSStringFromSelector([self selector])];
     [exception raise];
   }
+}
+
+- (NSInvocation *)invocation {
+  return invocation_;
+}
+
+- (SEL)selector {
+  return [invocation_ selector];
 }
 
 + (void)printException:(NSException *)exception fromTestName:(NSString *)name {
@@ -261,7 +286,9 @@ NSString *const SenTestLineNumberKey = @"SenTestLineNumberKey";
     @try {
       [self setUp];
       @try {
-        [self performSelector:currentSelector_];
+        NSInvocation *invocation = [self invocation];
+        [invocation setTarget:self];
+        [invocation invoke];
       } @catch (NSException *exception) {
         e = [exception retain];
       }
@@ -284,9 +311,61 @@ NSString *const SenTestLineNumberKey = @"SenTestLineNumberKey";
 
 - (NSString *)description {
   // This matches the description OCUnit would return to you
-  return [NSString stringWithFormat:@"-[%@ %@]", [self class], 
-          NSStringFromSelector(currentSelector_)];
+  return [NSString stringWithFormat:@"-[%@ %@]", [self class],
+          NSStringFromSelector([self selector])];
 }
+
+// Used for sorting methods below
+static int MethodSort(const void *a, const void *b) {
+  const char *nameA = sel_getName(method_getName(*(Method*)a));
+  const char *nameB = sel_getName(method_getName(*(Method*)b));
+  return strcmp(nameA, nameB);
+}
+
++ (NSArray *)testInvocations {
+  NSMutableArray *invocations = nil;
+  unsigned int methodCount;
+  Method *methods = class_copyMethodList(self, &methodCount);
+  if (methods) {
+    // This handles disposing of methods for us even if an exception should fly.
+    [NSData dataWithBytesNoCopy:methods
+                         length:sizeof(Method) * methodCount];
+    // Sort our methods so they are called in Alphabetical order just
+    // because we can.
+    qsort(methods, methodCount, sizeof(Method), MethodSort);
+    invocations = [NSMutableArray arrayWithCapacity:methodCount];
+    for (size_t i = 0; i < methodCount; ++i) {
+      Method currMethod = methods[i];
+      SEL sel = method_getName(currMethod);
+      char *returnType = NULL;
+      const char *name = sel_getName(sel);
+      // If it starts with test, takes 2 args (target and sel) and returns
+      // void run it.
+      if (strstr(name, "test") == name) {
+        returnType = method_copyReturnType(currMethod);
+        if (returnType) {
+          // This handles disposing of returnType for us even if an
+          // exception should fly. Length +1 for the terminator, not that
+          // the length really matters here, as we never reference inside
+          // the data block.
+          [NSData dataWithBytesNoCopy:returnType
+                               length:strlen(returnType) + 1];
+        }
+      }
+      if (returnType  // True if name starts with "test"
+          && strcmp(returnType, @encode(void)) == 0
+          && method_getNumberOfArguments(currMethod) == 2) {
+        NSMethodSignature *sig = [self instanceMethodSignatureForSelector:sel];
+        NSInvocation *invocation
+          = [NSInvocation invocationWithMethodSignature:sig];
+        [invocation setSelector:sel];
+        [invocations addObject:invocation];
+      }
+    }
+  }
+  return invocations;
+}
+
 @end
 
 #endif  // GTM_IPHONE_SDK
@@ -305,6 +384,20 @@ NSString *const SenTestLineNumberKey = @"SenTestLineNumberKey";
     [devLogClass performSelector:@selector(disableTracking)];
   }
 }
+
++ (BOOL)isAbstractTestCase {
+  NSString *name = NSStringFromClass(self);
+  return [name rangeOfString:@"AbstractTest"].location != NSNotFound;
+}
+
++ (NSArray *)testInvocations {
+  NSArray *invocations = nil;
+  if (![self isAbstractTestCase]) {
+    invocations = [super testInvocations];
+  }
+  return invocations;
+}
+
 @end
 
 // Leak detection
@@ -312,11 +405,42 @@ NSString *const SenTestLineNumberKey = @"SenTestLineNumberKey";
 // Don't want to get leaks on the iPhone Device as the device doesn't
 // have 'leaks'. The simulator does though.
 
+// We will need the system version but can't use any built in Cocoa functionality since this is
+// an iPhone app, so instead we get that information from the system with a system command.
+#define TEMP_FILE @"version.txt"
+
+static float _GetSystemVersion(void) {
+  float returnedVersion = 0.0f;
+
+  NSString *getSystemVersionCommand
+    = [NSString stringWithString: @"sw_vers | grep ProductVersion | awk '{print $2}' > version.txt"];
+
+  if (system([getSystemVersionCommand UTF8String])) {
+    NSLog(@"Could not determine the system version for using leaks - assuming pre-snow leopard");
+  }
+  else {
+    NSString *version = [NSString stringWithContentsOfFile:TEMP_FILE
+                                                  encoding:NSUTF8StringEncoding
+                                                     error:nil];
+
+    NSString *majorVersion = [version substringToIndex:4];
+    returnedVersion = [majorVersion floatValue];
+  }
+
+  [[NSFileManager defaultManager] removeItemAtPath:TEMP_FILE
+                                             error:nil];
+
+  return returnedVersion;
+}
+
+
 // COV_NF_START
 // We don't have leak checking on by default, so this won't be hit.
 static void _GTMRunLeaks(void) {
-  // This is an atexit handler. It runs leaks for us to check if we are 
-  // leaking anything in our tests. 
+  const float SNOW_LEOPARD = 10.6;
+
+  // This is an atexit handler. It runs leaks for us to check if we are
+  // leaking anything in our tests.
   const char* cExclusionsEnv = getenv("GTM_LEAKS_SYMBOLS_TO_IGNORE");
   NSMutableString *exclusions = [NSMutableString string];
   if (cExclusionsEnv) {
@@ -329,13 +453,23 @@ static void _GTMRunLeaks(void) {
       [exclusions appendFormat:@"-exclude \"%@\" ", exclusion];
     }
   }
-  NSString *string 
+
+  NSString *leaksCommand
     = [NSString stringWithFormat:@"/usr/bin/leaks %@%d"
-       @"| /usr/bin/sed -e 's/Leak: /Leaks:0: warning: Leak /'", 
+       @"| /usr/bin/sed -e 's/Leak: /Leaks:0: warning: Leak /'",
        exclusions, getpid()];
-  int ret = system([string UTF8String]);
+
+  // Snow Leopard and up require an additional environment variable to be set
+  // in order for the leaks command to work.
+  if (_GetSystemVersion() >= SNOW_LEOPARD)
+  {
+    NSString* snowLeopardEnvironmentVariable = [NSString stringWithString:@"export DYLD_ROOT_PATH=;"];
+    leaksCommand = [snowLeopardEnvironmentVariable stringByAppendingString:leaksCommand];
+  }
+
+  int ret = system([leaksCommand UTF8String]);
   if (ret) {
-    fprintf(stderr, "%s:%d: Error: Unable to run leaks. 'system' returned: %d", 
+    fprintf(stderr, "%s:%d: Error: Unable to run leaks. 'system' returned: %d",
             __FILE__, __LINE__, ret);
     fflush(stderr);
   }
@@ -355,11 +489,11 @@ static __attribute__((constructor)) void _GTMInstallLeaks(void) {
       fprintf(stderr, "Leak Checking Enabled\n");
       fflush(stderr);
       int ret = atexit(&_GTMRunLeaks);
-      _GTMDevAssert(ret == 0, 
-                    @"Unable to install _GTMRunLeaks as an atexit handler (%d)", 
+      _GTMDevAssert(ret == 0,
+                    @"Unable to install _GTMRunLeaks as an atexit handler (%d)",
                     errno);
       // COV_NF_END
-    }  
+    }
   }
 }
 

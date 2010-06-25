@@ -197,7 +197,7 @@ do { \
 #define STAssertNotEquals(a1, a2, description, ...) \
 do { \
   @try { \
-    if (@encode(__typeof__(a1)) != @encode(__typeof__(a2))) { \
+    if (strcmp(@encode(__typeof__(a1)), @encode(__typeof__(a2)))) { \
       [self failWithException:[NSException failureInFile:[NSString stringWithUTF8String:__FILE__] \
                                                   atLine:__LINE__ \
                                          withDescription:[@"Type mismatch -- " stringByAppendingString:STComposeString(description, ##__VA_ARGS__)]]]; \
@@ -238,16 +238,16 @@ do { \
   @try { \
     id a1value = (a1); \
     id a2value = (a2); \
-    if ( (@encode(__typeof__(a1value)) == @encode(id)) && \
-         (@encode(__typeof__(a2value)) == @encode(id)) && \
-         ![(id)a1value isEqual:(id)a2value] ) continue; \
-         NSString *_expression = [NSString stringWithFormat:@"%s('%@') != %s('%@')", #a1, [a1 description], #a2, [a2 description]]; \
-         if (desc != nil) { \
-           _expression = [NSString stringWithFormat:@"%@: %@", _expression, STComposeString(desc, ##__VA_ARGS__)]; \
-         } \
-         [self failWithException:[NSException failureInFile:[NSString stringWithUTF8String:__FILE__] \
-                                                     atLine:__LINE__ \
-                                            withDescription:_expression]]; \
+    if ((strcmp(@encode(__typeof__(a1value)), @encode(id)) == 0) && \
+        (strcmp(@encode(__typeof__(a2value)), @encode(id)) == 0) && \
+        ![(id)a1value isEqual:(id)a2value]) continue; \
+    NSString *_expression = [NSString stringWithFormat:@"%s('%@') != %s('%@')", #a1, [a1 description], #a2, [a2 description]]; \
+    if (desc != nil) { \
+      _expression = [NSString stringWithFormat:@"%@: %@", _expression, STComposeString(desc, ##__VA_ARGS__)]; \
+    } \
+    [self failWithException:[NSException failureInFile:[NSString stringWithUTF8String:__FILE__] \
+                                                atLine:__LINE__ \
+                                       withDescription:_expression]]; \
   } \
   @catch (id anException) { \
     [self failWithException:[NSException failureInRaise:[NSString stringWithFormat: @"(%s) != (%s)", #a1, #a2] \
@@ -269,7 +269,7 @@ do { \
 #define STAssertOperation(a1, a2, op, description, ...) \
 do { \
   @try { \
-    if (@encode(__typeof__(a1)) != @encode(__typeof__(a2))) { \
+    if (strcmp(@encode(__typeof__(a1)), @encode(__typeof__(a2)))) { \
       [self failWithException:[NSException failureInFile:[NSString stringWithUTF8String:__FILE__] \
                                                   atLine:__LINE__ \
                                          withDescription:[@"Type mismatch -- " stringByAppendingString:STComposeString(description, ##__VA_ARGS__)]]]; \
@@ -486,9 +486,9 @@ do { \
     id a1value = (a1); \
     id a2value = (a2); \
     if (a1value == a2value) continue; \
-    if ( (@encode(__typeof__(a1value)) == @encode(id)) && \
-         (@encode(__typeof__(a2value)) == @encode(id)) && \
-         [(id)a1value isEqual: (id)a2value] ) continue; \
+    if ((strcmp(@encode(__typeof__(a1value)), @encode(id)) == 0) && \
+        (strcmp(@encode(__typeof__(a2value)), @encode(id)) == 0) && \
+        [(id)a1value isEqual: (id)a2value]) continue; \
     [self failWithException:[NSException failureInEqualityBetweenObject: a1value \
                                                               andObject: a2value \
                                                                  inFile: [NSString stringWithUTF8String:__FILE__] \
@@ -516,7 +516,7 @@ do { \
 #define STAssertEquals(a1, a2, description, ...) \
 do { \
   @try { \
-    if (@encode(__typeof__(a1)) != @encode(__typeof__(a2))) { \
+    if (strcmp(@encode(__typeof__(a1)), @encode(__typeof__(a2)))) { \
       [self failWithException:[NSException failureInFile:[NSString stringWithUTF8String:__FILE__] \
                                                                                  atLine:__LINE__ \
                                                                         withDescription:[@"Type mismatch -- " stringByAppendingString:STComposeString(description, ##__VA_ARGS__)]]]; \
@@ -562,7 +562,7 @@ do { \
 #define STAssertEqualsWithAccuracy(a1, a2, accuracy, description, ...) \
 do { \
   @try { \
-    if (@encode(__typeof__(a1)) != @encode(__typeof__(a2))) { \
+    if (strcmp(@encode(__typeof__(a1)), @encode(__typeof__(a2)))) { \
       [self failWithException:[NSException failureInFile:[NSString stringWithUTF8String:__FILE__] \
                                                                                  atLine:__LINE__ \
                                                                         withDescription:[@"Type mismatch -- " stringByAppendingString:STComposeString(description, ##__VA_ARGS__)]]]; \
@@ -986,15 +986,23 @@ do { \
 
 // SENTE_END
 
-@interface SenTestCase : NSObject {
-  SEL currentSelector_;
-}
-
+@protocol SenTestCase
++ (id)testCaseWithInvocation:(NSInvocation *)anInvocation;
+- (id)initWithInvocation:(NSInvocation *)anInvocation;
 - (void)setUp;
 - (void)invokeTest;
 - (void)tearDown;
-- (void)performTest:(SEL)sel;
+- (void)performTest;
 - (void)failWithException:(NSException*)exception;
+- (NSInvocation *)invocation;
+- (SEL)selector;
++ (NSArray *)testInvocations;
+@end
+
+@interface SenTestCase : NSObject<SenTestCase> {
+ @private
+  NSInvocation *invocation_;
+}
 @end
 
 GTM_EXTERN NSString *const SenTestFailureException;
@@ -1008,4 +1016,27 @@ GTM_EXTERN NSString *const SenTestLineNumberKey;
 // to set up our logging system correctly to verify logging calls.
 // See GTMUnitTestDevLog.h for details
 @interface GTMTestCase : SenTestCase
+
+// Returns YES if this is an abstract testCase class as opposed to a concrete
+// testCase class that you want tests run against. SenTestCase is not designed
+// out of the box to handle an abstract class hierarchy descending from it with
+// some concrete subclasses.  In some cases we want all the "concrete"
+// subclasses of an abstract subclass of SenTestCase to run a test, but we don't
+// want that test to be run against an instance of an abstract subclass itself.
+// By returning "YES" here, the tests defined by this class won't be run against
+// an instance of this class. As an example class hierarchy:
+//
+//                                            FooExtensionTestCase
+// GTMTestCase <- ExtensionAbstractTestCase <
+//                                            BarExtensionTestCase
+// 
+// So FooExtensionTestCase and BarExtensionTestCase inherit from
+// ExtensionAbstractTestCase (and probably FooExtension and BarExtension inherit
+// from a class named Extension). We want the tests in ExtensionAbstractTestCase
+// to be run as part of FooExtensionTestCase and BarExtensionTestCase, but we
+// don't want them run against ExtensionAbstractTestCase. The default
+// implementation checks to see if the name of the class contains the word
+// "AbstractTest" (case sensitive).
++ (BOOL)isAbstractTestCase;
+
 @end
