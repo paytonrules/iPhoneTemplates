@@ -17,7 +17,12 @@
 //
 
 #import "GTMSenTestCase.h"
+
 #import <unistd.h>
+#if GTM_IPHONE_SIMULATOR
+#import <objc/message.h>
+#endif
+
 #import "GTMObjC2Runtime.h"
 #import "GTMUnitTestDevLog.h"
 
@@ -39,11 +44,11 @@
                         atLine:(int)lineNumber
                         reason:(NSString *)reason {
   NSDictionary *userInfo =
-    [NSDictionary dictionaryWithObjectsAndKeys:
-     [NSNumber numberWithInteger:lineNumber], SenTestLineNumberKey,
-     filename, SenTestFilenameKey,
-     nil];
-
+  [NSDictionary dictionaryWithObjectsAndKeys:
+   [NSNumber numberWithInteger:lineNumber], SenTestLineNumberKey,
+   filename, SenTestFilenameKey,
+   nil];
+  
   return [self exceptionWithName:SenTestFailureException
                           reason:reason
                         userInfo:userInfo];
@@ -55,18 +60,18 @@
 + (NSException *)failureInFile:(NSString *)filename
                         atLine:(int)lineNumber
                withDescription:(NSString *)formatString, ... {
-
+  
   NSString *testDescription = @"";
   if (formatString) {
     va_list vl;
     va_start(vl, formatString);
     testDescription =
-      [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
+    [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
     va_end(vl);
   }
-
+  
   NSString *reason = testDescription;
-
+  
   return [self failureInFile:filename atLine:lineNumber reason:reason];
 }
 
@@ -75,19 +80,19 @@
                              inFile:(NSString *)filename
                              atLine:(int)lineNumber
                     withDescription:(NSString *)formatString, ... {
-
+  
   NSString *testDescription = @"";
   if (formatString) {
     va_list vl;
     va_start(vl, formatString);
     testDescription =
-      [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
+    [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
     va_end(vl);
   }
-
+  
   NSString *reason = [NSString stringWithFormat:@"'%@' should be %s. %@",
-                      condition, isTrue ? "TRUE" : "FALSE", testDescription];
-
+                      condition, isTrue ? "false" : "true", testDescription];
+  
   return [self failureInFile:filename atLine:lineNumber reason:reason];
 }
 
@@ -96,20 +101,20 @@
                                          inFile:(NSString *)filename
                                          atLine:(int)lineNumber
                                 withDescription:(NSString *)formatString, ... {
-
+  
   NSString *testDescription = @"";
   if (formatString) {
     va_list vl;
     va_start(vl, formatString);
     testDescription =
-      [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
+    [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
     va_end(vl);
   }
-
+  
   NSString *reason =
-    [NSString stringWithFormat:@"'%@' should be equal to '%@'. %@",
-     [left description], [right description], testDescription];
-
+  [NSString stringWithFormat:@"'%@' should be equal to '%@'. %@",
+   [left description], [right description], testDescription];
+  
   return [self failureInFile:filename atLine:lineNumber reason:reason];
 }
 
@@ -119,27 +124,27 @@
                                         inFile:(NSString *)filename
                                         atLine:(int)lineNumber
                                withDescription:(NSString *)formatString, ... {
-
+  
   NSString *testDescription = @"";
   if (formatString) {
     va_list vl;
     va_start(vl, formatString);
     testDescription =
-      [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
+    [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
     va_end(vl);
   }
-
+  
   NSString *reason;
   if (accuracy) {
     reason =
-      [NSString stringWithFormat:@"'%@' should be equal to '%@'. %@",
-       left, right, testDescription];
+    [NSString stringWithFormat:@"'%@' should be equal to '%@'. %@",
+     left, right, testDescription];
   } else {
     reason =
-      [NSString stringWithFormat:@"'%@' should be equal to '%@' +/-'%@'. %@",
-       left, right, accuracy, testDescription];
+    [NSString stringWithFormat:@"'%@' should be equal to '%@' +/-'%@'. %@",
+     left, right, accuracy, testDescription];
   }
-
+  
   return [self failureInFile:filename atLine:lineNumber reason:reason];
 }
 
@@ -147,19 +152,19 @@
                          inFile:(NSString *)filename
                          atLine:(int)lineNumber
                 withDescription:(NSString *)formatString, ... {
-
+  
   NSString *testDescription = @"";
   if (formatString) {
     va_list vl;
     va_start(vl, formatString);
     testDescription =
-      [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
+    [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
     va_end(vl);
   }
-
+  
   NSString *reason = [NSString stringWithFormat:@"'%@' should raise. %@",
                       expression, testDescription];
-
+  
   return [self failureInFile:filename atLine:lineNumber reason:reason];
 }
 
@@ -168,16 +173,16 @@
                          inFile:(NSString *)filename
                          atLine:(int)lineNumber
                 withDescription:(NSString *)formatString, ... {
-
+  
   NSString *testDescription = @"";
   if (formatString) {
     va_list vl;
     va_start(vl, formatString);
     testDescription =
-      [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
+    [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
     va_end(vl);
   }
-
+  
   NSString *reason;
   if ([[exception name] isEqualToString:SenTestFailureException]) {
     // it's our exception, assume it has the right description on it.
@@ -187,7 +192,7 @@
     reason = [NSString stringWithFormat:@"'%@' raised '%@'. %@",
               expression, [exception reason], testDescription];
   }
-
+  
   return [self failureInFile:filename atLine:lineNumber reason:reason];
 }
 
@@ -199,7 +204,7 @@ NSString *STComposeString(NSString *formatString, ...) {
     va_list vl;
     va_start(vl, formatString);
     reason =
-      [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
+    [[[NSString alloc] initWithFormat:formatString arguments:vl] autorelease];
     va_end(vl);
   }
   return reason;
@@ -287,8 +292,16 @@ NSString *const SenTestLineNumberKey = @"SenTestLineNumberKey";
       [self setUp];
       @try {
         NSInvocation *invocation = [self invocation];
-        [invocation setTarget:self];
-        [invocation invoke];
+#if GTM_IPHONE_SIMULATOR
+        // We don't call [invocation invokeWithTarget:self]; because of
+        // Radar 8081169: NSInvalidArgumentException can't be caught
+        // It turns out that on iOS4 (and 3.2) exceptions thrown inside an
+        // [invocation invoke] on the simulator cannot be caught.
+        // http://openradar.appspot.com/8081169
+        objc_msgSend(self, [invocation selector]);
+#else
+        [invocation invokeWithTarget:self];
+#endif
       } @catch (NSException *exception) {
         e = [exception retain];
       }
@@ -357,7 +370,7 @@ static int MethodSort(const void *a, const void *b) {
           && method_getNumberOfArguments(currMethod) == 2) {
         NSMethodSignature *sig = [self instanceMethodSignatureForSelector:sel];
         NSInvocation *invocation
-          = [NSInvocation invocationWithMethodSignature:sig];
+        = [NSInvocation invocationWithMethodSignature:sig];
         [invocation setSelector:sel];
         [invocations addObject:invocation];
       }
@@ -376,7 +389,7 @@ static int MethodSort(const void *a, const void *b) {
   if (devLogClass) {
     [devLogClass performSelector:@selector(enableTracking)];
     [devLogClass performSelector:@selector(verifyNoMoreLogsExpected)];
-
+    
   }
   [super invokeTest];
   if (devLogClass) {
@@ -405,40 +418,9 @@ static int MethodSort(const void *a, const void *b) {
 // Don't want to get leaks on the iPhone Device as the device doesn't
 // have 'leaks'. The simulator does though.
 
-// We will need the system version but can't use any built in Cocoa functionality since this is
-// an iPhone app, so instead we get that information from the system with a system command.
-#define TEMP_FILE @"version.txt"
-
-static float _GetSystemVersion(void) {
-  float returnedVersion = 0.0f;
-
-  NSString *getSystemVersionCommand
-    = [NSString stringWithString: @"sw_vers | grep ProductVersion | awk '{print $2}' > version.txt"];
-
-  if (system([getSystemVersionCommand UTF8String])) {
-    NSLog(@"Could not determine the system version for using leaks - assuming pre-snow leopard");
-  }
-  else {
-    NSString *version = [NSString stringWithContentsOfFile:TEMP_FILE
-                                                  encoding:NSUTF8StringEncoding
-                                                     error:nil];
-
-    NSString *majorVersion = [version substringToIndex:4];
-    returnedVersion = [majorVersion floatValue];
-  }
-
-  [[NSFileManager defaultManager] removeItemAtPath:TEMP_FILE
-                                             error:nil];
-
-  return returnedVersion;
-}
-
-
 // COV_NF_START
 // We don't have leak checking on by default, so this won't be hit.
 static void _GTMRunLeaks(void) {
-  const float SNOW_LEOPARD = 10.6;
-
   // This is an atexit handler. It runs leaks for us to check if we are
   // leaking anything in our tests.
   const char* cExclusionsEnv = getenv("GTM_LEAKS_SYMBOLS_TO_IGNORE");
@@ -453,23 +435,21 @@ static void _GTMRunLeaks(void) {
       [exclusions appendFormat:@"-exclude \"%@\" ", exclusion];
     }
   }
-
-  NSString *leaksCommand
-    = [NSString stringWithFormat:@"/usr/bin/leaks %@%d"
-       @"| /usr/bin/sed -e 's/Leak: /Leaks:0: warning: Leak /'",
-       exclusions, getpid()];
-
-  // Snow Leopard and up require an additional environment variable to be set
-  // in order for the leaks command to work.
-  if (_GetSystemVersion() >= SNOW_LEOPARD)
-  {
-    NSString* snowLeopardEnvironmentVariable = [NSString stringWithString:@"export DYLD_ROOT_PATH=;"];
-    leaksCommand = [snowLeopardEnvironmentVariable stringByAppendingString:leaksCommand];
-  }
-
-  int ret = system([leaksCommand UTF8String]);
+  // Clearing out DYLD_ROOT_PATH because iPhone Simulator framework libraries
+  // are different from regular OS X libraries and leaks will fail to run
+  // because of missing symbols. Also capturing the output of leaks and then
+  // pipe rather than a direct pipe, because otherwise if leaks failed,
+  // the system() call will still be successful. Bug:
+  // http://code.google.com/p/google-toolbox-for-mac/issues/detail?id=56
+  NSString *string
+  = [NSString stringWithFormat:
+     @"LeakOut=`DYLD_ROOT_PATH='' /usr/bin/leaks %@%d` &&"
+     @"echo \"$LeakOut\"|/usr/bin/sed -e 's/Leak: /Leaks:0: warning: Leak /'",
+     exclusions, getpid()];
+  int ret = system([string UTF8String]);
   if (ret) {
-    fprintf(stderr, "%s:%d: Error: Unable to run leaks. 'system' returned: %d",
+    fprintf(stderr,
+            "%s:%d: Error: Unable to run leaks. 'system' returned: %d\n",
             __FILE__, __LINE__, ret);
     fflush(stderr);
   }
